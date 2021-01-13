@@ -9,7 +9,7 @@ import csv
 X_all = []
 Y_all = []
 
-with open("sentences.csv", "r") as fp :
+with open("sentences.csv", "r", encoding="utf-8") as fp :
     rd = csv.reader(fp)
 
     for data in rd :
@@ -22,6 +22,8 @@ with open("sentences.csv", "r") as fp :
             Y_all.append(0)
 
 X_all, Y_all = np.array(X_all), np.array(Y_all, dtype=np.int64)
+
+print("x : ", len(X_all))
 
 text_dic = CountVectorizer()
 text_dic.fit(X_all)
@@ -46,6 +48,8 @@ nb_predict_value = nb_model.predict(nb_test_count)
 scores = cross_val_score(nb_model, nb_test_count, Y_test, cv=5)
 print(scores)
 
+input_text = input("확인할 텍스트 : ")
+print(nb_model.predict(text_dic.transform(np.array([input_text]))))
 
 
 
